@@ -18,31 +18,27 @@ const start = async () => {
     let myOutput = "";
     let myError = "";
     await exec.exec(`${gitPath} log`);
-    await exec.exec(
-      `"${gitPath}" diff-tree --no-commit-id --name-only -r ${hash}`,
-      [],
-      {
-        listeners: {
-          stdout: (data) => {
-            core.debug(data);
-            myOutput += data.toString();
-          },
-          stderr: (data) => {
-            core.debug(data);
-            myError += data.toString();
-          },
-          stdline: (data) => {
-            core.debug(data);
-          },
-          errline: (data) => {
-            core.debug(data);
-          },
-          debug: (data) => {
-            core.debug(data);
-          },
+    await exec.exec(`"${gitPath}" diff-tree -r ${hash}`, [], {
+      listeners: {
+        stdout: (data) => {
+          core.debug(data);
+          myOutput += data.toString();
         },
-      }
-    );
+        stderr: (data) => {
+          core.debug(data);
+          myError += data.toString();
+        },
+        stdline: (data) => {
+          core.debug(data);
+        },
+        errline: (data) => {
+          core.debug(data);
+        },
+        debug: (data) => {
+          core.debug(data);
+        },
+      },
+    });
     core.debug(myError);
     core.debug(myOutput);
     core.setOutput("working-dir", myOutput);
