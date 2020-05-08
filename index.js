@@ -8,8 +8,6 @@ const args = [
   "--name-only",
   "-r",
   core.getInput("commit-hash"),
-  "|",
-  core.getInput("xargs"),
 ];
 
 const start = async () => {
@@ -25,7 +23,17 @@ const start = async () => {
           myOutput += data.toString();
         },
         stderr: (data) => {
+          core.debug(data);
           myError += data.toString();
+        },
+        stdline: (data) => {
+          core.debug(data);
+        },
+        errline: (data) => {
+          core.debug(data);
+        },
+        debug: (data) => {
+          core.debug(data);
         },
       },
     });
