@@ -1,13 +1,17 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: "Get Working Directory"
+description: "Get the working directory of the commit"
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  depth:
+    description: "Number of paths to dig"
     required: true
-    default: 'World'
+    default: "2"
+  commit-hash:
+    description: "Commit hash of running commit"
+    required: false
+    default: ${{ github.sha }}
 outputs:
-  time: # id of output
-    description: 'The time we we greeted you'
+  working-dir:
+    description: "The current working directory"
 runs:
-  using: 'node12'
-  main: 'index.js'
+  using: "node12"
+  main: "index.js"

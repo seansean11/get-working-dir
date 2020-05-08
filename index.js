@@ -1,15 +1,24 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+const core = require("@actions/core");
+const exec = require("@actions/exec");
+
+const args = [
+  "diff-tree",
+  "--no-commit-id",
+  "--name-only",
+  "-r",
+  core.getInput("commit-hash"),
+];
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+  const depth = core.getInput("depth");
+  core.setOutput("working-dir", "test");
+  const gitPath = await io.which("git", true);
+  exec.exec(`"${this.gitPath}"`, args);
+  const test = await exec.exec("git     ${{ github.sha }}");
+  // console.log(test);
+  console.log(process.env);
+  console.log(`Hello ${depth}!`);
 } catch (error) {
+  console.log(error);
   core.setFailed(error.message);
 }
