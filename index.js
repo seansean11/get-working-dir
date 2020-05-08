@@ -15,10 +15,20 @@ const start = async () => {
     const gitPath = await io.which("git", true);
     const depth = core.getInput("depth");
     core.setOutput("working-dir", "test");
-    const test = await exec.exec(`"${gitPath}"`, args);
-    core.debug(test);
-    core.debug(process.env);
-    core.debug(`Hello ${depth}!`);
+    let myOutput = "";
+    let myError = "";
+    await exec.exec(`"${gitPath}"`, args, {
+      listeners: {
+        stdout: (data) => {
+          myOutput += data.toString();
+        },
+        stderr: (data) => {
+          myError += data.toString();
+        },
+      },
+    });
+    core.debug(myError);
+    core.debug(`Hello ${myOutput}!`);
   } catch (error) {
     core.error(error);
     core.setFailed(error.message);
