@@ -14,7 +14,6 @@ const start = async () => {
   try {
     const gitPath = await io.which("git", true);
     const depth = core.getInput("depth");
-    core.setOutput("working-dir", "test");
     let myOutput = "";
     let myError = "";
     await exec.exec(`"${gitPath}"`, args, {
@@ -28,7 +27,7 @@ const start = async () => {
       },
     });
     core.debug(myError);
-    core.debug(`Hello ${myOutput}!`);
+    core.setOutput("working-dir", myOutput);
   } catch (error) {
     core.error(error);
     core.setFailed(error.message);
