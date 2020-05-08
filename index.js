@@ -8,7 +8,8 @@ const args = [
   "--name-only",
   "-r",
   core.getInput("commit-hash"),
-  "| xargs",
+  "|",
+  core.getInput("xargs"),
 ];
 
 const start = async () => {
