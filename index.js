@@ -14,10 +14,11 @@ const start = async () => {
   try {
     const gitPath = await io.which("git", true);
     const depth = core.getInput("depth");
+    const hash = core.getInput("commit-hash");
     let myOutput = "";
     let myError = "";
     await exec.exec(
-      `"${gitPath}" diff-tree --no-commit-id --name-only -r a8c666aef80fdb16a09c75165dbec97f7cec0dc2`,
+      `"${gitPath}" diff-tree --no-commit-id --name-only -r ${hash}`,
       [],
       {
         listeners: {
