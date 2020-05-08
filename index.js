@@ -16,27 +16,31 @@ const start = async () => {
     const depth = core.getInput("depth");
     let myOutput = "";
     let myError = "";
-    await exec.exec(`"${gitPath}"`, args, {
-      listeners: {
-        stdout: (data) => {
-          core.debug(data);
-          myOutput += data.toString();
+    await exec.exec(
+      `"${gitPath}" diff-tree --no-commit-id --name-only -r a8c666aef80fdb16a09c75165dbec97f7cec0dc2`,
+      [],
+      {
+        listeners: {
+          stdout: (data) => {
+            core.debug(data);
+            myOutput += data.toString();
+          },
+          stderr: (data) => {
+            core.debug(data);
+            myError += data.toString();
+          },
+          stdline: (data) => {
+            core.debug(data);
+          },
+          errline: (data) => {
+            core.debug(data);
+          },
+          debug: (data) => {
+            core.debug(data);
+          },
         },
-        stderr: (data) => {
-          core.debug(data);
-          myError += data.toString();
-        },
-        stdline: (data) => {
-          core.debug(data);
-        },
-        errline: (data) => {
-          core.debug(data);
-        },
-        debug: (data) => {
-          core.debug(data);
-        },
-      },
-    });
+      }
+    );
     core.debug(myError);
     core.debug(myOutput);
     core.setOutput("working-dir", myOutput);
