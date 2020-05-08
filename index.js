@@ -17,6 +17,7 @@ const start = async () => {
     const hash = core.getInput("commit-hash");
     let myOutput = "";
     let myError = "";
+    await exec.exec(`${gitPath} log`);
     await exec.exec(
       `"${gitPath}" diff-tree --no-commit-id --name-only -r ${hash}`,
       [],
