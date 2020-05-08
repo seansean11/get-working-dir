@@ -19,6 +19,7 @@ const start = async () => {
     await exec.exec(`"${gitPath}"`, args, {
       listeners: {
         stdout: (data) => {
+          core.debug(data);
           myOutput += data.toString();
         },
         stderr: (data) => {
