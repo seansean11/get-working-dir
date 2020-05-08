@@ -15,11 +15,11 @@ const start = async () => {
     const depth = core.getInput("depth");
     core.setOutput("working-dir", "test");
     const test = await exec.exec(`"${gitPath}"`, args);
-    core.info(test);
-    core.info(process.env);
-    core.info(`Hello ${depth}!`);
+    core.debug(test);
+    core.debug(process.env);
+    core.debug(`Hello ${depth}!`);
   } catch (error) {
-    core.info(error);
+    core.error(error);
     core.setFailed(error.message);
   }
 };
