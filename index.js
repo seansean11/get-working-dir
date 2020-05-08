@@ -1,6 +1,7 @@
 const core = require("@actions/core");
 const exec = require("@actions/exec");
 
+const gitPath = await io.which("git", true);
 const args = [
   "diff-tree",
   "--no-commit-id",
@@ -12,13 +13,11 @@ const args = [
 try {
   const depth = core.getInput("depth");
   core.setOutput("working-dir", "test");
-  const gitPath = await io.which("git", true);
-  exec.exec(`"${this.gitPath}"`, args);
-  const test = await exec.exec("git     ${{ github.sha }}");
-  // console.log(test);
-  console.log(process.env);
-  console.log(`Hello ${depth}!`);
+  const test = exec.exec(`"${gitPath}"`, args);
+  core.info(test);
+  core.info(process.env);
+  core.info(`Hello ${depth}!`);
 } catch (error) {
-  console.log(error);
+  core.info(error);
   core.setFailed(error.message);
 }
