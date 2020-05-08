@@ -27,6 +27,7 @@ const start = async () => {
       },
     });
     core.debug(myError);
+    core.debug(myOutput);
     core.setOutput("working-dir", myOutput);
   } catch (error) {
     core.error(error);
